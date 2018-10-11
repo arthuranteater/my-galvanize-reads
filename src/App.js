@@ -41,7 +41,8 @@ class App extends Component {
       );
   }
 
-  bListClick = () => {
+  bListClick = event => {
+    event.preventDefault()
     this.setState({
       listBooks: true
     });
@@ -54,44 +55,61 @@ class App extends Component {
   };
 
   render() {
-    let ndata = {};
+
+    console.log("render");
+
+    console.log(this.state.data)
+
     const { error, isLoaded, data } = this.state;
+
+    let narray = []
+
+    let errormess = null;
+
     if (error) {
-      return <div>Error: {error.message}</div>;
+      errormess = `Error: ${error.message}`;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      errormess = "Loading...";
     } else {
-      ndata = data.result;
-      console.log(ndata);
-
-      let wPage = (
-        <Welcome
-          bListClicked={this.bListClick}
-          aListClicked={this.aListClick}
-        />
-      );
-
-      let bList = null;
-      let aList = null;
-
-      if (this.state.listBooks) {
-        bList = <Books bPop={this.state.listBooks} ndata={ndata} />;
-        wPage = null;
-      }
-      if (this.state.listAuthors) {
-        aList = <Authors aPop={this.state.listAuthors} ndata={ndata} />;
-        wPage = null;
-      }
-
-      return (
-        <div className="App">
-          <Bar />
-          {wPage}
-          {bList}
-          {aList}
-        </div>
-      );
+      narray = data.result
     }
+
+    let wPage = (
+      <Welcome bListClicked={this.bListClick} aListClicked={this.aListClick} />
+    );
+
+    let bList = null
+
+    if (this.state.listBooks) {
+      bList = (
+        <div className="row text-center mt-5">
+          <Books narray={narray} />
+        </div>
+      )
+      console.log(narray[1].Title)
+      wPage = null
+    }
+
+    let aList = null;
+
+    if (this.state.listAuthors) {
+      aList = (
+        <div>
+          <Authors narray={narray} />
+        </div>
+      )
+      wPage = null
+    }
+
+    return (
+      <div className="App">
+        {errormess}
+        <Bar />
+        {wPage}
+        <div className="container mt-2">{bList}</div>
+        {aList}
+      </div>
+    );
   }
 }
 

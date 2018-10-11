@@ -1,25 +1,33 @@
 import React from "react";
 
 const Book = props => {
+  let imageUrl = `${props.image}`;
   return (
-    <div>
+    <div className="col mx-auto m-2">
       <div className="t card">
-        <img
-          className="card-img-top"
-          src=".../100px180/?text=Image cap"
-          alt="Card image cap"
-        />
+        <img className="card-img-top" src={imageUrl} alt="book cover" />
         <div class="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
+          <h5 className="card-title">{props.title}</h5>
+          <p className="card-text">{props.description}</p>
+          <img src="" />
+          <img src="" />
+          <img src="" />
+          <img src="" />
+          <img src="" />
         </div>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">Cras justo odio</li>
-          <li className="list-group-item">Dapibus ac facilisis in</li>
-          <li className="list-group-item">Vestibulum at eros</li>
+          <li className="list-group-item">
+            <span>By:</span>
+            {props.last}, {props.first}
+          </li>
+          <li className="list-group-item">
+            <span>Genre:</span>
+            {props.genre}
+          </li>
+          <li className="list-group-item">
+            <span>Book Id:</span>
+            {props.id}
+          </li>
         </ul>
         <div className="card-body">
           <a href="#" className="card-link">
@@ -31,7 +39,7 @@ const Book = props => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Book;
