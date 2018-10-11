@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import Welcome from "./Components/Welcome/Welcome";
+import Welcome from "./Components/Welcome";
 import Authors from "./Components/Authors/Authors";
 import Books from "./Components/Books/Books";
+import Bar from "./Components/Navbar";
 
 const getUrl = "http://localhost:4000/book";
 
@@ -53,28 +54,41 @@ class App extends Component {
   };
 
   render() {
-    let list = {};
+    let ndata = {};
     const { error, isLoaded, data } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      list = data.result;
-      console.log(list);
+      ndata = data.result;
+      console.log(ndata);
+
+      let wPage = (
+        <Welcome
+          bListClicked={this.bListClick}
+          aListClicked={this.aListClick}
+        />
+      );
+
+      let bList = null;
+      let aList = null;
+
+      if (this.state.listBooks) {
+        bList = <Books bPop={this.state.listBooks} ndata={ndata} />;
+        wPage = null;
+      }
+      if (this.state.listAuthors) {
+        aList = <Authors aPop={this.state.listAuthors} ndata={ndata} />;
+        wPage = null;
+      }
+
       return (
-        <div>
-          <nav class="navbar fixed-top navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-              Fixed top
-            </a>
-          </nav>
-          <Welcome
-            bListClicked={this.bListClick}
-            aListClicked={this.aListClick}
-          />
-          <Books bPop={this.state.listBooks} bList={list} />
-          <Authors aPop={this.state.listAuthors} aList={list} />
+        <div className="App">
+          <Bar />
+          {wPage}
+          {bList}
+          {aList}
         </div>
       );
     }

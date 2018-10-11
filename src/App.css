@@ -2,14 +2,15 @@
 
 .App {
   text-align: center;
-}
-
-.w {
   background-color: black;
   height: 100vh;
 }
 
-.b {
+.wb {
   font-family: Ultra;
   background-color: #e5c100;
+}
+
+.t {
+  width: 18rem;
 }
